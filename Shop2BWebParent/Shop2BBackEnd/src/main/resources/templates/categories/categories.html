@@ -42,7 +42,7 @@
                         <td class="hideable-column">[[${category.id}]]</td>
                         <td>
                             <span  th:if="${category.image == ''}" class="fas fa-portrait fa-3x icon-silver"></span>
-                            <img th:if="${category.image != null}" th:src="@{${category.imagePath}}" alt="" style="width: 100px;">
+                            <img class="img-fluid" th:if="${category.image != null}" th:src="@{${category.imagePath}}" alt="" style="width: 100px;">
                         </td>
                         <td>[[${category.name}]]</td>
                         <td class="hideable-column">[[${category.alias}]]</td>
