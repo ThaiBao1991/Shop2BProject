@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+    <head th:replace="fragments :: page_head('Categories - Shop2B Admin', 'none')">
+  
+    </head>
+<head>
+<body>
+	<div class="container-fluid">
+        <div th:replace="navigation :: menu">           
+        </div>
+
+        <div>
+            <h2>Manage Products</h2>
+            <a th:href="@{/products/new}" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+            &nbsp;&nbsp;
+            <a th:href="@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2" ></a>
+        </div>
+		
+		<div th:if="${message !=null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        
+        <div th:replace="fragments :: search_form('/products/page/1')"></div>
+		
+        <div class="full-details">
+            <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="hideable-column">ID</th>
+                        <th>Main Image</th>
+                        <th class="hideable-column">
+                            <th th:replace="fragments :: column_link('/products','name', 'Product Name','tag')"></th>
+                        </th>
+                        <th class="hideable-column">
+                            <th th:replace="fragments :: column_link('/products','brand', 'Brand','tag')"></th>
+                        </th>
+                        <th class="hideable-column">
+                            <th th:replace="fragments :: column_link('/products','category', 'Brand','tag')"></th>
+                        </th>
+                        <th>Enabled</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="product : ${listProducts}">
+                        <td class="hideable-column">[[${product.id}]]</td>
+                        <td>
+                            <span  th:if="${product.mainImage == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+                            <img th:if="${product.mainImage != null}" th:src="@{${product.mainImagePath}}" alt="" style="width: 100px;">
+                        </td>
+                        <td>[[${product.name}]]</td>
+                        <td class="hideable-column">[[${product.brand.name}]]</td>
+                        <td class="hideable-column">[[${product.category.name}]]</td>
+                        <td>
+                            <div th:replace="fragments :: status(${product.enabled},'category','/products/'+${product.id})"></div>
+                        </td>
+                        <td>
+                            <a class="fas fa-file-alt fa-2x icon-green" th:href="@{'products/detail'+${product.id}}" title="View details of this products"></a>
+                            &nbsp;
+                            <div th:replace="fragments :: edit('product' , '/products/edit/' + ${product.id})"></div>
+                            &nbsp;
+                            <div th:replace="fragments :: delete('product' , '/products/delete/' + ${product.id}, ${product.id},true)"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="less-details">
+            <div th:each="product : ${listProducts}" class="row m-1">
+                <div class="col-4">
+                    <span  th:if="${product.mainImage == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+                    <img th:if="${product.mainImage != null}" th:src="@{${product.mainImagePath}}" alt="" style="width: 100px;">
+                </div>
+                <div class="col-8">
+                    <div>[[${product.name}]]</div>
+                    <div class="mt-2">
+                        <div th:replace="fragments :: status(${product.enabled},'product','/products/'+${product.id})"></div>
+                        &nbsp;
+                    </div>
+                    <div>
+                        <a class="fas fa-file-alt fa-2x icon-green" th:href="@{'products/detail'+${product.id}}" title="View details of this products"></a>
+                        &nbsp;
+                        <div th:replace="fragments :: edit('product','/products/edit/'+${product.id})"></div>
+                        &nbsp;
+                        <div th:replace="fragments :: delete('product','/products/delete/'+${product.id},${product.id},true)"></div>
+                    </div>
+                </div>
+                <div>&nbsp;</div>
+            </div>
+        </div>
+
+        <div:block th:unless="${keyword !=null}" class="text-center">
+            <div th:replace="fragments :: pagination('/products','top-level products')"></div>
+        </div:block>
+		
+		<div th:replace="modal_fragments :: confirm_modal"></div>
+		
+        <div th:replace="fragments :: footer"></div>
+    </div>
+    <script type="text/javascript">
+        moduleURL ="[[@{/products}]]";
+
+        $(document).ready(function(){
+            $(".link-delete").on('click',function(e){
+                e.preventDefault();
+                showDeleteConfirmModal($(this),'product');
+            });
+        });
+    </script>
+    <script th:src="@{/js/common_list.js}"></script>
+    
+</body>
+</html>

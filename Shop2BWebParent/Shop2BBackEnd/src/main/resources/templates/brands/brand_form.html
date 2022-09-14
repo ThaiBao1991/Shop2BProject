@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head(${pageTitle})">
+<head th:replace="fragments :: page_head(${pageTitle}, 'none')">
 	  
 </head>
 <body>
@@ -69,6 +69,7 @@
      <div th:replace="modal_fragments :: modal_diaglog"></div>
     
     <script type="text/javascript">
+		MAX_FILE_SIZE =10240000; //10MB
         moduleURL ="[[@{/brands}]]";
 
         $(document).ready(function(){
