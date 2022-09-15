@@ -2,9 +2,8 @@ var extraImagesCount =0;
 
 $(document).ready(function () {
   $("input[name='extraImage']").each(function(index){
-
     $(this).change(function(){
-        if(!checkFileSize(this)){
+		if(!checkFileSize(this)){
           return;
         }
         showExtraImageThumbnail(this,index);
