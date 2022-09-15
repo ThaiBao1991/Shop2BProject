@@ -1,8 +1,6 @@
 package bao.code.shop2b.admin.product;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,5 +153,22 @@ public class ProductController {
 		}
 		
 		return "redirect:/products";
+	}
+	
+	@GetMapping("/products/edit/{id}")
+	public String editProduct(@PathVariable(name="id") Integer id
+			, Model model, RedirectAttributes ra) throws ProductNotFoundException{
+		try {
+			Product product = productService.get(id);
+			List<Brand> listBrands = brandService.listAll();
+			
+			model.addAttribute("product",product);
+			model.addAttribute("listBrands",listBrands);
+			model.addAttribute("pageTitle", "Edit Product (ID : " +id +")");
+			return "products/product_form";
+		} catch (ProductNotFoundException e) {
+			ra.addFlashAttribute("message",e.getMessage());
+			return "redirect:/products";
+		}
 	}
 }
