@@ -48,13 +48,17 @@
                         <div class="tab-pane" id="images" role="tabpanel" >
                             <div th:replace="products/product_images :: content"></div>
                         </div>
-                        <div class="tab-pane" id="details" role="tabpanel">Details</div>
+                        <div class="tab-pane" id="details" role="tabpanel">
+                            <div th:replace="products/product_detail :: content"></div>
+                            <div>
+                                <input type="button" class="btn btn-secondary" value="Add More Detail" onclick="addNextDetailSection()">
+                            </div>
+                        </div>
                         <div class="tab-pane p-3" id="shipping" role="tabpanel">
                             <div th:replace="products/product_shipping :: content"></div>
                         </div>
                     </div>
-            </div>         
-            
+            </div>                     
             <div class="text-center">
                 <input type="submit" value="Save" class="btn btn-primary m-3">
                 <input type="button" value="Cancel" id="buttonCancel" class="btn btn-secondary">
@@ -76,13 +80,14 @@
         moduleURL ="[[@{/products}]]";
         brandModuleURL ="[[@{/brands}]]";
         defaultImageThumbnailSrc ="[[@{/images/image-thumbnail.png}]]";
-        checkUniqueUrl = "[[@{/products/check_unique}]]";
 
         dropdownBrands = $("#brand");
         dropdownCategories = $("#category");
 
     </script>
     <script th:src="@{/js/common_form.js}"></script>
-    <script th:src="@{/js/product_form.js}"></script>
+    <script th:src="@{/js/product_form_detail.js}"></script>
+    <script th:src="@{/js/product_form_images.js}"></script>
+    <script th:src="@{/js/product_form_overview.js}"></script>
 </body>
 </html>
