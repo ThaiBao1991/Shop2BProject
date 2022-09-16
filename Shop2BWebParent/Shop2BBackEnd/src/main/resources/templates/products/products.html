@@ -35,7 +35,7 @@
                             <th th:replace="fragments :: column_link('/products','brand', 'Brand','tag')"></th>
                         </th>
                         <th class="hideable-column">
-                            <th th:replace="fragments :: column_link('/products','category', 'Category','tag')"></th>
+                            <th th:replace="fragments :: column_link('/products','category', 'Brand','tag')"></th>
                         </th>
                         <th>Enabled</th>
                         <th></th>
@@ -49,18 +49,22 @@
                             <span  th:if="${product.mainImage == null}" class="fas fa-portrait fa-3x icon-silver"></span>
                             <img th:if="${product.mainImage != null}" th:src="@{${product.mainImagePath}}" alt="" style="width: 100px;">
                         </td>
-                        <td>[[${product.name}]]</td>
+                        <td>
+                            <a class="link-detail" th:href="@{'products/detail/'+${product.id}}" title="View details of this products">
+                            [[${product.name}]]
+                            </a>  
+                        </td>
                         <td class="hideable-column">[[${product.brand.name}]]</td>
                         <td class="hideable-column">[[${product.category.name}]]</td>
                         <td>
-                            <div th:replace="fragments :: status(${product.enabled},'category','/products/'+${product.id})"></div>
+                            <div th:replace="fragments :: status(${product.enabled},'category','/produts/'+${product.id})"></div>
                         </td>
                         <td>
-                            <a class="fas fa-file-alt fa-2x icon-green" th:href="@{'products/detail'+${product.id}}" title="View details of this products"></a>
+                            <a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'products/detail/'+${product.id}}" title="View details of this products"></a>
                             &nbsp;
-                            <div th:replace="fragments :: edit('product' , '/products/edit/' + ${product.id})"></div>
+                            <div th:replace="fragments :: edit('product' , '/produts/edit/' + ${product.id})"></div>
                             &nbsp;
-                            <div th:replace="fragments :: delete('product' , '/products/delete/' + ${product.id}, ${product.id},true)"></div>
+                            <div th:replace="fragments :: delete('product' , '/produts/delete/' + ${product.id}, ${product.id},true)"></div>
                         </td>
                     </tr>
                 </tbody>
@@ -80,7 +84,7 @@
                         &nbsp;
                     </div>
                     <div>
-                        <a class="fas fa-file-alt fa-2x icon-green" th:href="@{'products/detail'+${product.id}}" title="View details of this products"></a>
+                        <a class="fas fa-file-alt fa-2x icon-green" th:href="@{'products/detail/'+${product.id}}" title="View details of this products"></a>
                         &nbsp;
                         <div th:replace="fragments :: edit('product','/products/edit/'+${product.id})"></div>
                         &nbsp;
@@ -106,6 +110,12 @@
             $(".link-delete").on('click',function(e){
                 e.preventDefault();
                 showDeleteConfirmModal($(this),'product');
+            });
+
+            $(".link-detail").on("click",function(e){
+                e.preventDefault();
+                linkDetailURL = $(this).attr("href");
+                alert(linkDetailURL);
             });
         });
     </script>
