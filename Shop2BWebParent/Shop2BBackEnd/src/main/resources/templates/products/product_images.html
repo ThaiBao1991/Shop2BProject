@@ -17,24 +17,26 @@
             </div>
             
             <th:block th:each="productImage , status :${product.images}">
-                <div class="col border m-3 p-2" th:id="'divExtraImage' +${status.index}">
-                    <div>
-                        <label for="">Extra Image #[[${status.index + 1 }]] : [[${productImage.name}]]</label>
-                        <a name="linkRemoveExtraImage" class="btn fas fa-times-circle fa-2x icon-dark float-right" 
-                        title="Remove this image"></a>
+                    <div class="col border m-3 p-2" th:id="'divExtraImage' +${status.index}">
+                        <div>
+                            <label for="">Extra Image #[[${status.index + 1 }]] : [[${productImage.name}]]</label>
+                            <a name="linkRemoveExtraImage" class="btn fas fa-times-circle fa-2x icon-dark float-right" 
+                            title="Remove this image"></a>
+                        </div>
+                        <div class="m-2">
+                            <img th:src="@{${productImage.ImagePath}}" th:id="'extraThumbnail'+${status.index}" 
+                            th:alt="'Extra Image #' +${status.index + 1 } + 'preview'" class="img-fluid">
+                        </div>
+        
+                        <div>
+                            <input type="file" name="extraImage" accept="image/png, image/jpeg">
+                        </div>
+                        <input type="hidden" name="imageIDs" th:id="imageId +${status.index}"
+                        th:value="${productImage.id}">
+                        <input type="hidden" name="imageNames" th:id="imageName +${status.index}" 
+                        th:value="${productImage.name}">
                     </div>
-                    <div class="m-2">
-                        <img th:src="@{${productImage.ImagePath}}" th:id="'extraThumbnail'+${status.index}" 
-                        th:alt="'Extra Image #' +${status.index + 1 } + 'preview'" class="img-fluid">
-                    </div>
-    
-                    <div>
-                        <input type="file" name="extraImage" accept="image/png, image/jpeg">
-                    </div>
-                    <input type="hidden" name="imageIDs" th:id="imageId +${status.index}">
-                    <input type="hidden" name="imageNames" th:id="imageName +${status.index}">
-                </div>
-            </th:block>
+                </th:block>
 
             <div class="col border m-3 p-2" th:id="'divExtraImage' + ${numberOfExistingExtraImages + 1 }">
                 <div th:id="'extraImageHeader'+${numberOfExistingExtraImages}">
