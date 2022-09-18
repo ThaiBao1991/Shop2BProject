@@ -25,7 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import bao.code.shop2b.admin.FileUploadUtil;
 import bao.code.shop2b.admin.brand.BrandService;
+import bao.code.shop2b.admin.category.CategoryService;
 import bao.code.shop2b.common.entity.Brand;
+import bao.code.shop2b.common.entity.Category;
 import bao.code.shop2b.common.entity.Product;
 import bao.code.shop2b.common.entity.ProductImage;
 
@@ -36,14 +38,14 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
-	
 	@Autowired
 	private BrandService brandService;
-	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@GetMapping("/products")
 	public String listFirstPage(Model model) {
-		return listByPage(1, model, "name", "asc", null);
+		return listByPage(1, model, "name", "asc", null,0);
 	}
 	
 	@GetMapping("/products/page/{pageNum}")
@@ -52,9 +54,13 @@ public class ProductController {
 			,@Param("sortField") String sortField
 			,@Param("sortDir") String sortDir
 			,@Param("keyword") String keyword
+			,@Param("categoryId") Integer categoryId
 			) {
+		System.out.println("Selected category ID : " +categoryId);
 		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword);
 		List<Product> listProducts = page.getContent();
+		
+		List<Category> listCategories = categoryService.listCategoriesUsedInform();
 		
 		long startCount =(pageNum -1)*ProductService.PRODUCTS_PER_PAGE +1 ;
 		long endCount = startCount + ProductService.PRODUCTS_PER_PAGE -1;
@@ -75,6 +81,7 @@ public class ProductController {
 		model.addAttribute("reverseSortDir",reverseSortDir);
 		model.addAttribute("keyword",keyword);
 		model.addAttribute("listProducts",listProducts);
+		model.addAttribute("listCategories",listCategories);
 		
 		return "products/products";
 	}
