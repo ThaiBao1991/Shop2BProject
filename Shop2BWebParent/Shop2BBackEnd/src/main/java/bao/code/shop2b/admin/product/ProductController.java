@@ -236,4 +236,19 @@ public class ProductController {
 			return "redirect:/products";
 		}
 	}
+	
+	@GetMapping("/products/detail/{id}")
+	public String viewProductDetails(@PathVariable(name="id") Integer id
+			, Model model, RedirectAttributes ra) throws ProductNotFoundException{
+		try {
+			Product product = productService.get(id);
+			model.addAttribute("product",product);
+
+			
+			return "products/product_detail_modal";
+		} catch (ProductNotFoundException e) {
+			ra.addFlashAttribute("message",e.getMessage());
+			return "redirect:/products";
+		}
+	}
 }

@@ -62,9 +62,9 @@
                         <td>
                             <a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'products/detail/'+${product.id}}" title="View details of this products"></a>
                             &nbsp;
-                            <div th:replace="fragments :: edit('product' , '/produts/edit/' + ${product.id})"></div>
+                            <div th:replace="fragments :: edit('product' , '/products/edit/' + ${product.id})"></div>
                             &nbsp;
-                            <div th:replace="fragments :: delete('product' , '/produts/delete/' + ${product.id}, ${product.id},true)"></div>
+                            <div th:replace="fragments :: delete('product' , '/products/delete/' + ${product.id}, ${product.id},true)"></div>
                         </td>
                     </tr>
                 </tbody>
@@ -100,6 +100,13 @@
         </div:block>
 		
 		<div th:replace="modal_fragments :: confirm_modal"></div>
+
+        <div class="modal fade" id="detailModal">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
 		
         <div th:replace="fragments :: footer"></div>
     </div>
@@ -115,7 +122,7 @@
             $(".link-detail").on("click",function(e){
                 e.preventDefault();
                 linkDetailURL = $(this).attr("href");
-                alert(linkDetailURL);
+                $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
             });
         });
     </script>
