@@ -35,7 +35,7 @@
                             <th th:replace="fragments :: column_link('/products','brand', 'Brand','tag')"></th>
                         </th>
                         <th class="hideable-column">
-                            <th th:replace="fragments :: column_link('/products','category', 'Brand','tag')"></th>
+                            <th th:replace="fragments :: column_link('/products','category', 'Category','tag')"></th>
                         </th>
                         <th>Enabled</th>
                         <th></th>
@@ -50,8 +50,8 @@
                             <img th:if="${product.mainImage != null}" th:src="@{${product.mainImagePath}}" alt="" style="width: 100px;">
                         </td>
                         <td>
-                            <a class="link-detail" th:href="@{'products/detail/'+${product.id}}" title="View details of this products">
-                            [[${product.name}]]
+                            <a class="link-detail" th:href="@{'products/detail/'+${product.id}}" th:title="${product.name}">
+                            [[${product.shortName}]]
                             </a>  
                         </td>
                         <td class="hideable-column">[[${product.brand.name}]]</td>
@@ -78,7 +78,7 @@
                     <img th:if="${product.mainImage != null}" th:src="@{${product.mainImagePath}}" alt="" style="width: 100px;">
                 </div>
                 <div class="col-8">
-                    <div>[[${product.name}]]</div>
+                    <div>[[${product.shortName}]]</div>
                     <div class="mt-2">
                         <div th:replace="fragments :: status(${product.enabled},'product','/products/'+${product.id})"></div>
                         &nbsp;
