@@ -48,7 +48,7 @@ public class ProductController {
 		return listByPage(1, model, "name", "asc", null,0);
 	}
 	
-	@GetMapping("/products/page/{pageNum}")
+		
 	public String listByPage(@PathVariable(name="pageNum") int pageNum
 			,Model model
 			,@Param("sortField") String sortField
@@ -56,8 +56,7 @@ public class ProductController {
 			,@Param("keyword") String keyword
 			,@Param("categoryId") Integer categoryId
 			) {
-		System.out.println("Selected category ID : " +categoryId);
-		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword);
+		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword,categoryId);
 		List<Product> listProducts = page.getContent();
 		
 		List<Category> listCategories = categoryService.listCategoriesUsedInform();
@@ -70,6 +69,8 @@ public class ProductController {
 		}
 		
 		String reverseSortDir = sortDir.equals("asc") ? "desc" :"asc";
+		
+		if(categoryId!=null) model.addAttribute("categoryId",categoryId);
 		
 		model.addAttribute("currentPage",pageNum);
 		model.addAttribute("totalPages",page.getTotalPages());
