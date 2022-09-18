@@ -76,7 +76,7 @@
                             <img th:if="${product.mainImage != null}" th:src="@{${product.mainImagePath}}" alt="" style="width: 100px;">
                         </td>
                         <td>
-                            <a class="link-detail" th:href="@{'products/detail/'+${product.id}}" th:title="${product.name}">
+                            <a class="link-detail" th:href="@{'/products/detail/'+${product.id}}" th:title="${product.name}">
                             [[${product.shortName}]]
                             </a>  
                         </td>

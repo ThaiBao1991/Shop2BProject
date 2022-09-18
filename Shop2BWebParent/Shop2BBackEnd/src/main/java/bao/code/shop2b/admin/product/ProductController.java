@@ -48,7 +48,7 @@ public class ProductController {
 		return listByPage(1, model, "name", "asc", null,0);
 	}
 	
-		
+	@GetMapping("/products/page/{pageNum}")	
 	public String listByPage(@PathVariable(name="pageNum") int pageNum
 			,Model model
 			,@Param("sortField") String sortField
