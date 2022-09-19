@@ -115,17 +115,25 @@
                     <img th:if="${product.mainImage != null}" th:src="@{${product.mainImagePath}}" alt="" style="width: 100px;">
                 </div>
                 <div class="col-8">
-                    <div>[[${product.shortName}]]</div>
+                    <a class="link-detail" th:href="@{'/products/detail/'+${product.id}}" th:title="${product.name}">
+                        [[${product.shortName}]]
+                    </a>  
                     <div class="mt-2">
-                        <div th:replace="fragments :: status(${product.enabled},'product','/products/'+${product.id})"></div>
-                        &nbsp;
+                        <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                            <div th:replace="fragments :: status(${product.enabled},'product','/products/'+${product.id})"></div>
+                            &nbsp;
+                        </th:block>
                     </div>
-                    <div>
-                        <a class="fas fa-file-alt fa-2x icon-green" th:href="@{'products/detail/'+${product.id}}" title="View details of this products"></a>
-                        &nbsp;
-                        <div th:replace="fragments :: edit('product','/products/edit/'+${product.id})"></div>
-                        &nbsp;
-                        <div th:replace="fragments :: delete('product','/products/delete/'+${product.id},${product.id},true)"></div>
+                    <div class="mt-2">
+                        <a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'products/detail/'+${product.id}}" title="View details of this products"></a>
+                        <th:block sec:authorize="hasAnyAuthority('Admin','Editor','Salesperson')">
+                            &nbsp;
+                            <div th:replace="fragments :: edit('product' , '/products/edit/' + ${product.id})"></div>
+                        </th:block>
+                        <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                            &nbsp;
+                            <div th:replace="fragments :: delete('product' , '/products/delete/' + ${product.id}, ${product.id},true)"></div>
+                        </th:block>
                     </div>
                 </div>
                 <div>&nbsp;</div>
