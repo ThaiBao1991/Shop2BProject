@@ -1,5 +1,7 @@
 package bao.code.shop2b.category;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,14 @@ public class CategoryRepositoryTests {
 		System.out.println(category.getName() +" (" +category.isEnabled() +" )");
 		});
 	}
-
+	
+	@Test
+	public void testFindCategoryByAlias() {
+		String alias = "Bikiki_tops";
+		Category category = repo.findByAliasEnabled(alias);
+		
+		assertThat(category).isNotNull();
+	}
 }
 
 
