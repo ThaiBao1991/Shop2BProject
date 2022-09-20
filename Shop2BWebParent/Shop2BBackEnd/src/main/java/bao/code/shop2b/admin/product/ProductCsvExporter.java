@@ -10,23 +10,23 @@ import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
 import bao.code.shop2b.admin.AbstractExporter;
-import bao.code.shop2b.common.entity.Brand;
+import bao.code.shop2b.common.entity.Product;
 
 public class ProductCsvExporter extends AbstractExporter{
-public void export(List<Brand> listBrands, HttpServletResponse response) throws IOException {
+public void export(List<Product> listProducts, HttpServletResponse response) throws IOException {
 	super.setResponseHeader(response,"text/csv", ".csv","brands_");
 	
 	ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
 			CsvPreference.STANDARD_PREFERENCE);
 	
-	String[] csvHeader = {"Brand ID","Brand Name","Brand Categories"};
-	String[] fieldMapping = {"id","name","categories"};
+	String[] csvHeader = {"Product ID","Product Name","Product Brand","Product Categories"};
+	String[] fieldMapping = {"id","name","brand","category"};
 	
 	csvWriter.writeHeader(csvHeader);
 	
-	for(Brand brand : listBrands) {
-		brand.setName(brand.getName());
-		csvWriter.write(brand, fieldMapping);
+	for(Product product : listProducts) {
+		product.setName(product.getName());
+		csvWriter.write(product, fieldMapping);
 	}
 	csvWriter.close();
 }

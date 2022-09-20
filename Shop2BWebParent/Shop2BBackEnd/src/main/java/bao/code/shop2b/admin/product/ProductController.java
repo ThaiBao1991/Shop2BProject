@@ -2,6 +2,9 @@ package bao.code.shop2b.admin.product;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -190,5 +193,12 @@ public class ProductController {
 			ra.addFlashAttribute("message",e.getMessage());
 			return "redirect:/products";
 		}
+	}
+	
+	@GetMapping("/products/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException{
+		List<Product> listProducts = productService.listAll();
+		ProductCsvExporter exporter = new ProductCsvExporter();
+		exporter.export(listProducts, response);
 	}
 }

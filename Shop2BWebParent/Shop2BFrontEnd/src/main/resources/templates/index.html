@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Wellcome to Shop2B</title>
+<html xmls:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Shop2B', 'none')">
 </head>
 <body>
-	<h1>Welcome to my Shop2B</h1>
+	<div class="container-fluid">
+        <head th:replace="navigation :: header_menu"></head>
+        <div>
+            <h1>Wellcome to Shop2B</h1>
+        </div>
+    </div>
 </body>
 </html>
