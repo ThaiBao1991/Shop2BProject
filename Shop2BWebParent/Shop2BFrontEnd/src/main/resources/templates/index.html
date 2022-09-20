@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head('Shop2B', 'none')">
-</head>
-<body>
-	<div class="container-fluid">
-        <head th:replace="navigation :: header_menu"></head>
-        <div>
-            <h1>Wellcome to Shop2B</h1>
+	<head th:replace="fragments :: page_head('Shop2B', 'none')">
+	</head>
+	<body>
+        <div class="container-fluid">
+            <div th:replace="navigation :: header_menu"></div>
+            <div>
+                <h1>Wellcome to Shop2B</h1>
+            </div>
+
+            <div th:replace="navigation :: footer_menu"></div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
