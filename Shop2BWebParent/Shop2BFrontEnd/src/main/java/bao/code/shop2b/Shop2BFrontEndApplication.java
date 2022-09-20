@@ -1,10 +1,10 @@
-package bao.code.shop2b.site;
+package bao.code.shop2b;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication()
 public class Shop2BFrontEndApplication {
 
 	public static void main(String[] args) {
