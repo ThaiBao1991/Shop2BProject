@@ -12,6 +12,7 @@ import bao.code.shop2b.common.exception.ProductNotFoundException;
 @Service
 public class ProductService {
 	public static final int PRODUCTS_PER_PAGE =3;
+	public static final int SEARCH_RESULT_PER_PAGE =3;
 	
 	@Autowired
 	private ProductRepository repo;
@@ -30,5 +31,10 @@ public class ProductService {
 		}
 		
 		return product;
+	}
+	
+	public Page<Product> search(String keyword, int pageNum){
+		Pageable pageable = PageRequest.of(pageNum -1, SEARCH_RESULT_PER_PAGE);
+		return repo.search(keyword, pageable);
 	}
 }
