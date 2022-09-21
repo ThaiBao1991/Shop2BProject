@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import bao.code.shop2b.common.entity.Role;
 import bao.code.shop2b.common.entity.User;
+import bao.code.shop2b.common.exception.UserNotFoundException;
 
 @Service
 @Transactional

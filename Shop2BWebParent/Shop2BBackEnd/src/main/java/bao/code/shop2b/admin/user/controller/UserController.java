@@ -19,13 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import bao.code.shop2b.admin.FileUploadUtil;
-import bao.code.shop2b.admin.user.UserNotFoundException;
 import bao.code.shop2b.admin.user.UserService;
 import bao.code.shop2b.admin.user.export.UserCsvExporter;
 import bao.code.shop2b.admin.user.export.UserExcelExporter;
 import bao.code.shop2b.admin.user.export.UserPdfExporter;
 import bao.code.shop2b.common.entity.Role;
 import bao.code.shop2b.common.entity.User;
+import bao.code.shop2b.common.exception.UserNotFoundException;
 
 @Controller
 public class UserController {

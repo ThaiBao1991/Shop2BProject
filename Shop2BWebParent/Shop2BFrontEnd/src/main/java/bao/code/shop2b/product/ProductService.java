@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import bao.code.shop2b.common.entity.Product;
+import bao.code.shop2b.common.exception.ProductNotFoundException;
 
 @Service
 public class ProductService {
@@ -20,5 +21,14 @@ public class ProductService {
 		Pageable pageable = PageRequest.of(pageNum -1,PRODUCTS_PER_PAGE);
 		
 		return repo.listByCategory(categoryId, categoryIdMatch, pageable);
+	}
+	
+	public Product getProduct(String alias) throws ProductNotFoundException {
+		Product product = repo.findByAlias(alias);
+		if(product == null) {
+			throw new ProductNotFoundException("Could not find any product with alias :" +alias);
+		}
+		
+		return product;
 	}
 }

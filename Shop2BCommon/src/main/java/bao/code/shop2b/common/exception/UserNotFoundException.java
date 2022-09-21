@@ -1,4 +1,4 @@
-package bao.code.shop2b.admin.user;
+package bao.code.shop2b.common.exception;
 
 public class UserNotFoundException extends Exception {
 

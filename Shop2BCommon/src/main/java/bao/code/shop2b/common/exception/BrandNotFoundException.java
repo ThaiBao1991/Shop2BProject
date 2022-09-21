@@ -1,4 +1,4 @@
-package bao.code.shop2b.admin.brand;
+package bao.code.shop2b.common.exception;
 
 public class BrandNotFoundException extends Exception {
 

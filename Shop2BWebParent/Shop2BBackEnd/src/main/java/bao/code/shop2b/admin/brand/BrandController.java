@@ -22,6 +22,7 @@ import bao.code.shop2b.admin.FileUploadUtil;
 import bao.code.shop2b.admin.category.CategoryService;
 import bao.code.shop2b.common.entity.Brand;
 import bao.code.shop2b.common.entity.Category;
+import bao.code.shop2b.common.exception.BrandNotFoundException;
 
 @Controller
 public class BrandController {

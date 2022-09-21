@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bao.code.shop2b.common.entity.Brand;
+import bao.code.shop2b.common.exception.BrandNotFoundException;
 
 @Service
 @Transactional

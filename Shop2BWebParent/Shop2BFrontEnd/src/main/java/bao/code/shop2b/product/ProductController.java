@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import bao.code.shop2b.category.CategoryService;
 import bao.code.shop2b.common.entity.Category;
 import bao.code.shop2b.common.entity.Product;
+import bao.code.shop2b.common.exception.CategoryNotFoundException;
 
 @Controller
 public class ProductController {
@@ -30,34 +31,37 @@ public class ProductController {
 	public String viewCategoryByPage(@PathVariable("category_alias") String alias,
 			@PathVariable("pageNum") int pageNum,
 			Model model) {
-		Category category = categoryService.getCategory(alias);
-		if(category==null) {
+		try {
+			Category category = categoryService.getCategory(alias);
+			
+			List<Category> listCategoryParents = categoryService.getCategoryParents(category);
+			
+			Page<Product> pageProducts = productService.listByCategory(pageNum, category.getId());
+			List<Product> listProducts = pageProducts.getContent();
+			
+			long startCount =(pageNum -1)*ProductService.PRODUCTS_PER_PAGE +1 ;
+			long endCount = startCount + ProductService.PRODUCTS_PER_PAGE -1;
+			
+			if(endCount > pageProducts.getTotalElements()) {
+				endCount = pageProducts.getTotalElements();
+			}
+			
+			
+			model.addAttribute("currentPage",pageNum);
+			model.addAttribute("totalPages",pageProducts.getTotalPages());
+			model.addAttribute("startCount",startCount);
+			model.addAttribute("endCount",endCount);
+			model.addAttribute("totalItems",pageProducts.getTotalElements());
+			
+			model.addAttribute("pageTitle",category.getName());
+			model.addAttribute("listCategoryParents",listCategoryParents);
+			model.addAttribute("listProducts",listProducts);
+			model.addAttribute("category",category);
+			
+			return "products_by_category";
+		} catch (CategoryNotFoundException e) {
 			return "error/404";
 		}
-		List<Category> listCategoryParents = categoryService.getCategoryParents(category);
 		
-		Page<Product> pageProducts = productService.listByCategory(pageNum, category.getId());
-		List<Product> listProducts = pageProducts.getContent();
-		
-		long startCount =(pageNum -1)*ProductService.PRODUCTS_PER_PAGE +1 ;
-		long endCount = startCount + ProductService.PRODUCTS_PER_PAGE -1;
-		
-		if(endCount > pageProducts.getTotalElements()) {
-			endCount = pageProducts.getTotalElements();
-		}
-		
-		
-		model.addAttribute("currentPage",pageNum);
-		model.addAttribute("totalPages",pageProducts.getTotalPages());
-		model.addAttribute("startCount",startCount);
-		model.addAttribute("endCount",endCount);
-		model.addAttribute("totalItems",pageProducts.getTotalElements());
-		
-		model.addAttribute("pageTitle",category.getName());
-		model.addAttribute("listCategoryParents",listCategoryParents);
-		model.addAttribute("listProducts",listProducts);
-		model.addAttribute("category",category);
-		
-		return "products_by_category";
 	}
 }

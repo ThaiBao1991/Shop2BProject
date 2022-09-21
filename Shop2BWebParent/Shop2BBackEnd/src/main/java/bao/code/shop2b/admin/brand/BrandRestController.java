@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bao.code.shop2b.common.entity.Brand;
 import bao.code.shop2b.common.entity.Category;
+import bao.code.shop2b.common.exception.BrandNotFoundException;
 
 @RestController
 public class BrandRestController {

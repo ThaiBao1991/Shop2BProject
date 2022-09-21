@@ -25,6 +25,7 @@ import bao.code.shop2b.admin.security.ShopUserDetails;
 import bao.code.shop2b.common.entity.Brand;
 import bao.code.shop2b.common.entity.Category;
 import bao.code.shop2b.common.entity.Product;
+import bao.code.shop2b.common.exception.ProductNotFoundException;
 
 @Controller
 public class ProductController {
