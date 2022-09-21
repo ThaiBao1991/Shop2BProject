@@ -34,7 +34,6 @@ public class ProductController {
 		if(category==null) {
 			return "error/404";
 		}
-		System.out.println(pageNum);
 		List<Category> listCategoryParents = categoryService.getCategoryParents(category);
 		
 		Page<Product> pageProducts = productService.listByCategory(pageNum, category.getId());
