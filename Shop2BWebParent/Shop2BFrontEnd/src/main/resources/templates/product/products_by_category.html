@@ -5,12 +5,12 @@
 	<body>
         <div class="container-fluid">
             <div th:replace="navigation :: header_menu"></div>
-            
+            <div th:replace="navigation :: search_nav"></div>
             <div th:replace="breakcrumb :: content"></div>
 
            	<div class="row text-center">
                 <th:block th:each="cat : ${category.children}">
-                    <div class="col" th:if="${cat.enabled == true}">
+                    <div class="col-sm-4" th:if="${cat.enabled == true}">
                         <a th:href="@{'/c/' + ${cat.alias}}">
                             <img th:src="@{${cat.imagePath}}" height="100">
                             <br>
