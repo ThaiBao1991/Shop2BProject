@@ -82,7 +82,11 @@ public class Setting {
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Setting [key=" + key + ", value=" + value + ", category=" + category + "]";
+	}
+
 	
 }
