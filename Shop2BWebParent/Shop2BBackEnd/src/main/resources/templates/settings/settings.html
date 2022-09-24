@@ -14,45 +14,48 @@
             <h2>Site Settings</h2>
         </div>
 
+        <div th:if="${message !=null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
 
-            <div>
-                <ul class="nav nav-tabs" id="settingTab" role="tablist">
-                    <li class="nav-item" >
-                      <a class="nav-link active" data-toggle="tab" href="#general">General</a>
-                    </li>
-                    <li class="nav-item" >
-                      <a class="nav-link" data-toggle="tab" href="#countries">Countries</a>
-                    </li>
-                    <li class="nav-item" >
-                      <a class="nav-link" data-toggle="tab" href="#states">States</a>
-                    </li>
-                    <li class="nav-item" >
-                      <a class="nav-link" data-toggle="tab" href="#mailServer">Mail Server</a>
-                    </li>
-                    <li class="nav-item" >
-                        <a class="nav-link" data-toggle="tab" href="#mailTemplates">Mail Templates</a>
-                    </li>
-                </ul>
-                  
-                  <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane active p-3" id="general" role="tabpanel">
-                            <div th:replace="settings/general :: content"></div>
-                        </div>
-                        <div class="tab-pane" id="countries" role="tabpanel" >
-                            <h2>Countries</h2>
-                        </div>
-                        <div class="tab-pane" id="states" role="tabpanel" >
-                            <h2>States</h2>
-                        </div>
-                        <div class="tab-pane" id="mailServer" role="tabpanel">
-                            <h2>Mail Server</h2>                                              
-                        </div>
-                        <div class="tab-pane p-3" id="mailTemplates" role="tabpanel">
-                            <h2>Mail Templates</h2>                
-                        </div>
+        <div>
+            <ul class="nav nav-tabs" id="settingTab" role="tablist">
+                <li class="nav-item" >
+                    <a class="nav-link active" data-toggle="tab" href="#general">General</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" data-toggle="tab" href="#countries">Countries</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" data-toggle="tab" href="#states">States</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" data-toggle="tab" href="#mailServer">Mail Server</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" data-toggle="tab" href="#mailTemplates">Mail Templates</a>
+                </li>
+            </ul>
+                
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active p-3" id="general" role="tabpanel">
+                        <div th:replace="settings/general :: content"></div>
                     </div>
-            </div>                     
+                    <div class="tab-pane" id="countries" role="tabpanel" >
+                        <h2>Countries</h2>
+                    </div>
+                    <div class="tab-pane" id="states" role="tabpanel" >
+                        <h2>States</h2>
+                    </div>
+                    <div class="tab-pane" id="mailServer" role="tabpanel">
+                        <h2>Mail Server</h2>                                              
+                    </div>
+                    <div class="tab-pane p-3" id="mailTemplates" role="tabpanel">
+                        <h2>Mail Templates</h2>                
+                    </div>
+                </div>
+        </div>                     
 
         <div th:replace="fragments :: footer"></div>
 

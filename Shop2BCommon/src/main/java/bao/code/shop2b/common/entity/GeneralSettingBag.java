@@ -8,7 +8,7 @@ public class GeneralSettingBag extends SettingBag {
 		super(listSettings);
 	}
 	
-	public void updateCurrenCySymbol(String value) {
+	public void updateCurrencySymbol(String value) {
 		super.update("CURRENCY_SYMBOL", value);
 	}
 	
