@@ -22,10 +22,10 @@ public class SettingService {
 		List<Setting> generalSettings = new ArrayList<Setting>();
 		
 		List<Setting> settings = repo.findByCategory(SettingCategory.GENERAL);
-		List<Setting> curreSettings = repo.findByCategory(SettingCategory.CURRENCY);
+		List<Setting> currecySettings = repo.findByCategory(SettingCategory.CURRENCY);
 		
 		settings.addAll(generalSettings);
-		settings.addAll(curreSettings);
+		settings.addAll(currecySettings);
 		
 		return new GeneralSettingBag(settings);
 	}
