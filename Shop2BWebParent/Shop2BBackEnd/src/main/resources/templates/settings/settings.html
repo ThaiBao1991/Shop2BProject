@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org">
 <head>
-    <head th:replace="fragments :: page_head(${pageTitle},'tag')"></head>
+    <head th:replace="fragments :: page_head('Settings - Shop2B Admin','tag')"></head>
     <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}"/>
     <script th:src="@{/richtext/jquery.richtext.min.js}"></script>
 </head>
@@ -36,8 +36,8 @@
                   
                   <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane active" id="general" role="tabpanel">
-                            <h2>General</h2>
+                        <div class="tab-pane active p-3" id="general" role="tabpanel">
+                            <div th:replace="settings/general :: content"></div>
                         </div>
                         <div class="tab-pane" id="countries" role="tabpanel" >
                             <h2>Countries</h2>
@@ -54,12 +54,12 @@
                     </div>
             </div>                     
 
-        <div th:replace="fragments :: footer">
-        </div>
-
-        <div th:replace="modal_fragments :: modal_diaglog"></div>
+        <div th:replace="fragments :: footer"></div>
 
     </div>
-    
+    <script type="text/javascript">
+		MAX_FILE_SIZE =10240000; //10MB
+    </script>
+    <script th:src="@{/js/common_form.js}"></script>
 </body>
 </html>

@@ -43,9 +43,9 @@ public class SettingRepositoryTests {
 	
 	@Test
 	public void testCreateCurrencySettings() {
-		Setting currentId = new Setting("CURRENT_ID","1",SettingCategory.CURRENCY);
+		Setting currentId = new Setting("CURRENCY_ID","1",SettingCategory.CURRENCY);
 		Setting symbol = new Setting("SYMBOL","$",SettingCategory.CURRENCY);
-		Setting symbolPosition = new Setting("CURRENT_SYMBOL_POSITION","before",SettingCategory.CURRENCY);
+		Setting symbolPosition = new Setting("CURRENCY_SYMBOL_POSITION","before",SettingCategory.CURRENCY);
 		Setting decimalPointType = new Setting("DECIMAL_POINT_TYPE","POINT",SettingCategory.CURRENCY);
 		Setting decimalDigits = new Setting("DECIMAL_DIGITS","2",SettingCategory.CURRENCY);
 		Setting thousandsPointType = new Setting("THOUSANDS_POINT_TYPE","COMMA",SettingCategory.CURRENCY);
@@ -64,6 +64,13 @@ public class SettingRepositoryTests {
 		Iterable<Setting> iterable = repo.findAll();
 		
 		assertThat(iterable).size().isGreaterThan(0);
+	}
+	
+	@Test
+	public void testListSettingByCategory() {
+		List<Setting> settings = repo.findByCategory(SettingCategory.GENERAL);
+		
+		settings.forEach(System.out ::println);
 	}
 }
 
