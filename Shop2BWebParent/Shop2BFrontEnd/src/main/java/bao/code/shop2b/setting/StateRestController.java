@@ -1,4 +1,4 @@
-package bao.code.shop2b.admin.state;
+package bao.code.shop2b.setting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import bao.code.shop2b.common.entity.StateDTO;
 public class StateRestController {
 	@Autowired private StateRepository repo;
 	
-	@GetMapping("/states/list_by_country/{id}")
+	@GetMapping("/settings/list_states_by_country/{id}")
 	public List<StateDTO> listByCountry(@PathVariable("id") Integer countryId){
 		List<State> listStates = repo.findByCountryOrderByNameAsc(new Country(countryId));
 		List<StateDTO> result = new ArrayList<StateDTO>();

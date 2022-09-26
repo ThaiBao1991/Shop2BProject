@@ -1,4 +1,4 @@
-package bao.code.shop2b.admin.state;
+package bao.code.shop2b.common.entity;
 
 public class StateDTO {
 	private Integer id;
