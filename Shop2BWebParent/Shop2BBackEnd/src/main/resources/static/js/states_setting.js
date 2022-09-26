@@ -33,7 +33,7 @@ $(document).ready(function(){
         if(buttonAddState.val() =="Add"){
             addState();
         }else{
-            changeFormStateToNew();
+            changeFormStateToNewState();
         }
     });
 
@@ -57,7 +57,7 @@ function loadStates4Country(){
             $("<option>").val(state.id).text(state.name).appendTo(dropDownStates);
         });
     }).done(function(){
-        changeFormStateToNew();
+        changeFormStateToNewState();
         showToastMessage("All states have been loaded for country" + selectedCountry.text());
     }).fail(function(){
         showToastMessage("ERROR : Could not connect to server or server encountered an error");
@@ -74,10 +74,17 @@ function deleteState(){
 
     url = contextPath +"states/delete/" + stateId;
 
-    $.get(url, function(responseJSON){
-        $("#dropDownStates option[value ='"+ stateId +"']").remove();
-        changeFormStateToNew();
+    $.ajax({
+        type: 'DELETE',
+        url : url,
+        beforeSend : function(xhr){
+            xhr.setRequestHeader(csrfHeaderName, csrfValue);
+        },
+        data: JSON.stringify(jsonData),
+        contentType : 'application/json'
     }).done(function(){
+        $("#dropDownStates option[value ='"+ stateId +"']").remove();
+        changeFormStateToNewState();
         showToastMessage("The state have been delete");
     }).fail(function(){
         showToastMessage("ERROR : Could not connect to server or server encountered an error");
@@ -107,7 +114,7 @@ function updateState(){
         $("#dropDownStates option:selected").text(stateName);
         showToastMessage("The state has been update");
 
-        changeFormStateToNew();
+        changeFormStateToNewState();
     }).fail(function(){
         showToastMessage("ERROR : Could not connect to server or server encountered an error");
     });
@@ -159,7 +166,7 @@ function selectNewlyAddedState(stateId,stateName){
 
 }
 
-function changeFormStateToNew(){
+function changeFormStateToNewState(){
     buttonAddState.val("Add");
     labelStateName.text("State Name:");
 
