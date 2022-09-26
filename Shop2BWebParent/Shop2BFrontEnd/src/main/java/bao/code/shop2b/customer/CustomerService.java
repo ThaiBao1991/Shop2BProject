@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bao.code.shop2b.common.entity.Country;
+import bao.code.shop2b.common.entity.Customer;
 import bao.code.shop2b.setting.CountryRepository;
 
 @Service
@@ -15,5 +16,10 @@ public class CustomerService {
 	
 	public List<Country> listAllCountries(){
 		return countryRepo.findAllByOrderByNameAsc();
+	}
+	
+	public boolean isEmailUnique(String email) {
+		Customer customer = customerRepo.findByEmail(email);
+		return customer == null;
 	}
 }
