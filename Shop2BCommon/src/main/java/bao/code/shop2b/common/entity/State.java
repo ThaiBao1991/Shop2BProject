@@ -16,7 +16,7 @@ public class State {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false, length = 45)
+	@Column(nullable = false, length = 255)
 	private String name;
 	
 	@ManyToOne
