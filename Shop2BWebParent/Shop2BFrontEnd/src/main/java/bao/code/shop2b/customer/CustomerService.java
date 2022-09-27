@@ -36,6 +36,7 @@ public class CustomerService {
 		customer.setVerificationCode(randomCode);
 		
 		System.out.println("Verification code : " +randomCode);
+		customerRepo.save(customer);
 	}
 
 	private void encodePassword(Customer customer) {

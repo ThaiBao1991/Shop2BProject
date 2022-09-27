@@ -190,5 +190,7 @@ public class Customer {
 				+ ", lastName=" + lastName +"]";
 	}
 	 
-	
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
 }

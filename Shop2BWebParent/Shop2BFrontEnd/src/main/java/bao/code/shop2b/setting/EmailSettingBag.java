@@ -15,8 +15,8 @@ public class EmailSettingBag extends SettingBag {
 		return super.getValue("MAIL_HOST");
 	}
 	
-	public String getPort() {
-		return super.getValue("MAIL_PORT");
+	public int getPost() {
+		return Integer.parseInt(super.getValue("MAIL_POST")) ;
 	}
 	
 	public String getUserName() {
@@ -32,7 +32,7 @@ public class EmailSettingBag extends SettingBag {
 	}
 	
 	public String getSmtpSecured() {
-		return super.getValue("SMTP_SUCURED");
+		return super.getValue("SMTP_SECURED");
 	}
 	
 	public String getFromAdress() {
