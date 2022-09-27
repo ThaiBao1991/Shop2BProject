@@ -21,22 +21,22 @@
         <div>
             <ul class="nav nav-tabs" id="settingTab" role="tablist">
                 <li class="nav-item" >
-                    <a class="nav-link active" data-toggle="tab" href="#general">General</a>
+                    <a class="nav-link active" data-toggle="tab" href="#general" role="tab">General</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" data-toggle="tab" href="#countries">Countries</a>
+                    <a class="nav-link" data-toggle="tab" href="#countries" role="tab">Countries</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" data-toggle="tab" href="#states">States</a>
+                    <a class="nav-link" data-toggle="tab" href="#states" role="tab">States</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" data-toggle="tab" href="#mailServer">Mail Server</a>
+                    <a class="nav-link" data-toggle="tab" href="#mailServer" role="tab">Mail Server</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" data-toggle="tab" href="#mailTemplates">Mail Templates</a>
+                    <a class="nav-link" data-toggle="tab" href="#mailTemplates" role="tab">Mail Templates</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" data-toggle="tab" href="#payment">Payment</a>
+                    <a class="nav-link" data-toggle="tab" href="#payment" role="tab">Payment</a>
                 </li>
             </ul>
                 
@@ -55,7 +55,7 @@
                         <div th:replace="settings/mailServer :: content"></div>                                              
                     </div>
                     <div class="tab-pane p-3" id="mailTemplates" role="tabpanel">
-                        <h2>Mail Templates</h2>                
+                        <div th:replace="settings/mail_templates/mail_templates :: content"></div>                  
                     </div>
                     <div class="tab-pane p-3" id="payment" role="tabpanel">
                         <h2>Payment</h2>                
@@ -77,6 +77,11 @@
         contextPath = "[[@{/}]]";
         var csrfHeaderName ="[[${_csrf.headerName}]]";
         var csrfValue ="[[${_csrf.token}]]";
+
+        $(document).ready(function(){
+            $("#customerVerificationContent").richText();
+        });
+
     </script>
     <script th:src="@{/js/common_form.js}"></script>
     <script th:src="@{/js/countries_setting.js}"></script>
