@@ -46,6 +46,15 @@ $(document).ready(function(){
     });
 });
 
+function validateFormState(){
+    formState = document.getElementById("formState");
+    if(!formState.checkValidity()){
+        formState.reportValidity();
+        return false;
+    }
+    return true;
+}
+
 function loadStates4Country(){
     selectedCountry = $("#dropDownCountriesForStates option:selected")
     countryId = selectedCountry.val();
@@ -92,6 +101,8 @@ function deleteState(){
 }
 
 function updateState(){
+    if(!validateFormState()) return;
+
     url = contextPath + "states/save";
     stateId = dropDownStates.val();
     stateName = fieldStateName.val();
@@ -131,6 +142,8 @@ function changeFormStateToSelectedState(){
 }
 
 function addState(){
+    if(!validateFormState()) return;
+    
     url = contextPath + "states/save";
     stateName = fieldStateName.val();
 
