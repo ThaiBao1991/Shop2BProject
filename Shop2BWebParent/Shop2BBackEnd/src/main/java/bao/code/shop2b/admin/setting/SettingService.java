@@ -33,4 +33,8 @@ public class SettingService {
 	public void saveAll(Iterable<Setting> settings) {
 		repo.saveAll(settings);
 	}
+	
+	public List<Setting> getEmailServerSettings(){
+		return repo.findByCategory(SettingCategory.MAIL_SERVER);
+	}
 }

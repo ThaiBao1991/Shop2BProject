@@ -1,6 +1,5 @@
 package bao.code.shop2b.admin.setting;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -86,5 +85,15 @@ public class SettingController {
 			}
 		}
 		service.saveAll(listSettings);
+	}
+	
+	@PostMapping("/settings/save_mail_server")
+	public String saveMailServerSettings(HttpServletRequest request, RedirectAttributes ra) {
+		List<Setting> mailServerSettings = service.getEmailServerSettings();
+		updateSettingValuesFromForm(request, mailServerSettings);
+		
+		ra.addFlashAttribute("message","Mail server settings have been saved");
+		
+		return "redirect:/settings";
 	}
 }
