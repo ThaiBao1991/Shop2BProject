@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.Transient;
+
 @Entity
 @Table(name="customers")
 public class Customer {
@@ -189,7 +191,8 @@ public class Customer {
 		return "Customer [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName +"]";
 	}
-	 
+	
+	@Transient
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}
