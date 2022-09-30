@@ -4,12 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
+import bao.code.shop2b.admin.paging.SearchRepository;
 import bao.code.shop2b.common.entity.User;
 
-public interface UserRepository extends PagingAndSortingRepository<User, Integer>{
+public interface UserRepository extends SearchRepository<User, Integer>{
 	@Query("SELECT u from User u Where u.email = :email")
 	public User getUserByEmail(@Param("email") String email);
 	

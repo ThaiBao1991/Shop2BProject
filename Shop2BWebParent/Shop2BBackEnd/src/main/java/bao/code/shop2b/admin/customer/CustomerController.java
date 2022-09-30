@@ -3,8 +3,6 @@ package bao.code.shop2b.admin.customer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import bao.code.shop2b.admin.paging.PagingAndSortingHelper;
+import bao.code.shop2b.admin.paging.PagingAndSortingParam;
 import bao.code.shop2b.common.entity.Country;
 import bao.code.shop2b.common.entity.Customer;
 import bao.code.shop2b.common.exception.CustomerNotFoundException;
@@ -22,7 +22,7 @@ public class CustomerController {
 	
 	@GetMapping("/customers")
 	public String listFirstPage(Model model) {
-		return listByPage(model, 1, "firstName", "asc", null);
+		return "redirect:/customers/page/1?sortField=firstName&sortDir=asc";
 	}
 	
 	@GetMapping("/customers/new")
@@ -49,36 +49,12 @@ public class CustomerController {
 	 * @return
 	 */
 	@GetMapping("/customers/page/{pageNum}")
-	public String listByPage(Model model
+	public String listByPage(
+			@PagingAndSortingParam(listName = "listCustomers",moduleURL = "/customers") PagingAndSortingHelper helper
 			,@PathVariable(name="pageNum") int pageNum		
-			,@Param("sortField") String sortField
-			,@Param("sortDir") String sortDir
-			,@Param("keyword") String keyword
-			) {
-		Page<Customer> page = service.listByPage(pageNum, sortField, sortDir, keyword);
-		List<Customer> listCustomers = page.getContent();
 
-		
-		long startCount =(pageNum -1)*CustomerService.CUSTOMER_PER_PAGE +1 ;
-		long endCount = startCount + CustomerService.CUSTOMER_PER_PAGE -1;
-		
-		if(endCount > page.getTotalElements()) {
-			endCount = page.getTotalElements();
-		}
-		
-		String reverseSortDir = sortDir.equals("asc") ? "desc" :"asc";
-		
-		model.addAttribute("currentPage",pageNum);
-		model.addAttribute("totalPages",page.getTotalPages());
-		model.addAttribute("startCount",startCount);
-		model.addAttribute("endCount",endCount);
-		model.addAttribute("totalItems",page.getTotalElements());
-		model.addAttribute("sortField",sortField);
-		model.addAttribute("sortDir",sortDir);
-		model.addAttribute("reverseSortDir",reverseSortDir);
-		model.addAttribute("keyword",keyword);
-		model.addAttribute("listCustomers",listCustomers);
-		model.addAttribute("moduleURL","/customers");
+			) {
+		service.listByPage(pageNum, helper);
 		
 		return "customers/customers";
 	}

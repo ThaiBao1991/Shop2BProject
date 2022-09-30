@@ -89,7 +89,7 @@
                         <td class="hideable-column">[[${product.category.name}]]</td>
                         <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
                             <td>
-                                <div th:replace="fragments :: status(${product.enabled},'category','/products/'+${product.id})"></div>
+                                <div th:replace="fragments :: status(${product.enabled},'product','/products/'+${product.id})"></div>
                             </td>
                         </th:block>
                         <td>

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import bao.code.shop2b.admin.FileUploadUtil;
 import bao.code.shop2b.admin.brand.BrandService;
 import bao.code.shop2b.admin.category.CategoryService;
+import bao.code.shop2b.admin.paging.PagingAndSortingHelper;
+import bao.code.shop2b.admin.paging.PagingAndSortingParam;
 import bao.code.shop2b.admin.security.ShopUserDetails;
 import bao.code.shop2b.common.entity.Brand;
 import bao.code.shop2b.common.entity.Category;
@@ -39,46 +40,21 @@ public class ProductController {
 	
 	@GetMapping("/products")
 	public String listFirstPage(Model model) {
-		return listByPage(1, model, "name", "asc", null,0);
+		return "redirect:/products/page/1?sortField=name&sortDir=asc";
 	}
 	
 	@GetMapping("/products/page/{pageNum}")	
-	public String listByPage(@PathVariable(name="pageNum") int pageNum
-			,Model model
-			,@Param("sortField") String sortField
-			,@Param("sortDir") String sortDir
-			,@Param("keyword") String keyword
-			,@Param("categoryId") Integer categoryId
+	public String listByPage(
+			@PagingAndSortingParam(listName = "listProducts", moduleURL = "/products") PagingAndSortingHelper helper,
+			@PathVariable(name="pageNum") int pageNum,
+			Model model,
+			@Param("categoryId") Integer categoryId
 			) {
-		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword,categoryId);
-		List<Product> listProducts = page.getContent();
+		productService.listByPage(pageNum, helper, categoryId);
 		
 		List<Category> listCategories = categoryService.listCategoriesUsedInform();
-		
-		long startCount =(pageNum -1)*ProductService.PRODUCTS_PER_PAGE +1 ;
-		long endCount = startCount + ProductService.PRODUCTS_PER_PAGE -1;
-		
-		if(endCount > page.getTotalElements()) {
-			endCount = page.getTotalElements();
-		}
-		
-		String reverseSortDir = sortDir.equals("asc") ? "desc" :"asc";
-		
 		if(categoryId!=null) model.addAttribute("categoryId",categoryId);
-		
-		model.addAttribute("currentPage",pageNum);
-		model.addAttribute("totalPages",page.getTotalPages());
-		model.addAttribute("startCount",startCount);
-		model.addAttribute("endCount",endCount);
-		model.addAttribute("totalItems",page.getTotalElements());
-		model.addAttribute("sortField",sortField);
-		model.addAttribute("sortDir",sortDir);
-		model.addAttribute("reverseSortDir",reverseSortDir);
-		model.addAttribute("keyword",keyword);
-		model.addAttribute("listProducts",listProducts);
 		model.addAttribute("listCategories",listCategories);
-		model.addAttribute("moduleURL","/products");
-		
 		return "products/products";
 	}
 	
@@ -110,11 +86,14 @@ public class ProductController {
 			@AuthenticationPrincipal ShopUserDetails loggedUser,
 			RedirectAttributes ra) throws IOException {
 		
-		if(loggedUser.hasRole("Salesperson")) {
-			productService.saveProductPrice(product);
-			ra.addFlashAttribute("message","The product has been saved successfully");
+		if(!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+			if(loggedUser.hasRole("Salesperson")) {
+				productService.saveProductPrice(product);
+				ra.addFlashAttribute("message","The product has been saved successfully");
+				
+				return "redirect:/products";
+			}
 			
-			return "redirect:/products";
 		}
 		
 		ProductSaveHelper.setMainImageName(mainImageMultipart, product);
