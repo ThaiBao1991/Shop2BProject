@@ -58,13 +58,13 @@
                         <th class="hideable-column">ID</th>
                         <th>Main Image</th>
                         <th class="hideable-column">
-                            <th th:replace="fragments :: column_link('/products','name', 'Product Name','tag')"></th>
+                            <th th:replace="fragments :: column_link('name', 'Product Name','tag')"></th>
                         </th>
                         <th class="hideable-column">
-                            <th th:replace="fragments :: column_link('/products','brand', 'Brand','tag')"></th>
+                            <th th:replace="fragments :: column_link('brand', 'Brand','tag')"></th>
                         </th>
                         <th class="hideable-column">
-                            <th th:replace="fragments :: column_link('/products','category', 'Category','tag')"></th>
+                            <th th:replace="fragments :: column_link('category', 'Category','tag')"></th>
                         </th>
                         <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
                             <th>Enabled</th>
@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        <div th:replace="fragments :: pagination('/products','products')"></div>
+        <div th:replace="fragments :: pagination('products')"></div>
 		
 		<div th:replace="modal_fragments :: confirm_modal"></div>
 
