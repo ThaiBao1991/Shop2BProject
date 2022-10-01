@@ -22,7 +22,7 @@ public class CustomerController {
 	
 	@GetMapping("/customers")
 	public String listFirstPage(Model model) {
-		return "redirect:/customers/page/1?sortField=firstName&sortDir=asc";
+		return "redirect:/customers/page/1?sortField=id&sortDir=asc";
 	}
 	
 	@GetMapping("/customers/new")

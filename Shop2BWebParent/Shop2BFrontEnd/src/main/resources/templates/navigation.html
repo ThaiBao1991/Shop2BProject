@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmls:th="http://www.thymeleaf.org">
+<html xmls:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	<head th:replace="fragments :: page_head('Shop2B', 'none')"></head>
 	<body>
         <div th:fragment="header_menu">
             <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
                 <a class="navbar-brand" th:href="@{/}">
-                    <img style="max-width: 4rem;" th:src="@{${SITE_LOGO}}" alt="">
+                    <img style="max-width: 50;" th:src="@{${SITE_LOGO}}" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar, #searchNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -22,7 +23,7 @@
                             <a class="nav-link" href="">Shipping &amp; Delivery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Login</a>
+                            <a class="nav-link" th:href="@{/login}">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/register}">Register</a>
@@ -37,6 +38,14 @@
 
         <div th:fragment="search_nav" class="row">
             <div class="col-md">
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                        <input type="submit" name="Logout" id="">
+                    </form>
+                </th:block>
+
+
                 <nav class="navbar navbar-expand-sm bg-light">
                     <div class="collapse navbar-collapse" id="searchNavbar">
                         <form class="form-inline" th:action="@{/search}" method="get">
@@ -45,6 +54,38 @@
                              placeholder="keyword" required>
                             <input type="submit" value="Search" class="btn btn-outline-success">
                         </form>
+                        <ul class="navbar-nav">
+                            <th:block sec:authorize="isAuthenticated()">
+                                <li class="nav-item">
+                                    <b><a class="nav-link" th:href="@{/customer}" sec:authentication="principal.fullName"></a></b>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Adresses</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Questions</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Reviews</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Orders</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Cart</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>
+                                </li>
+
+                            </th:block>
+                        </ul>
                     </div>
                 </nav>
             </div>
@@ -71,7 +112,8 @@
                     </div>
                 </nav>
             </div>
-        	<div th:fragment="footer" class="text-center m-3">
+
+            <div th:fragment="footer" class="text-center m-3">
                 <p>[[${COPYRIGHT}]]</p>
             </div>
         </div>
