@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head th:replace="fragments :: page_head('Categories - Shop2B Admin', 'none')">
+    <head th:replace="fragments :: page_head('Products - Shop2B Admin', 'none')">
   
     </head>
 <head>
@@ -55,7 +55,9 @@
             <table class="table table-bordered table-striped table-hover table-responsive-xl">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="hideable-column">ID</th>
+                        <th class="hideable-column">
+                        	<th th:replace="fragments :: column_link('id', 'ID','tag')"></th>
+                        </th>
                         <th>Main Image</th>
                         <th class="hideable-column">
                             <th th:replace="fragments :: column_link('name', 'Product Name','tag')"></th>

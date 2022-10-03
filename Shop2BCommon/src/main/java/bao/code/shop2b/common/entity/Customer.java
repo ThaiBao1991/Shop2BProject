@@ -59,6 +59,7 @@ public class Customer {
 	@JoinColumn(name="country_id")
 	private Country country;
 	
+	
 	public Customer() {
 		
 	}

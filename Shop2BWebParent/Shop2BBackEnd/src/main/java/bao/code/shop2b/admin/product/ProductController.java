@@ -40,7 +40,7 @@ public class ProductController {
 	
 	@GetMapping("/products")
 	public String listFirstPage(Model model) {
-		return "redirect:/products/page/1?sortField=name&sortDir=asc";
+		return "redirect:/products/page/1?sortField=id&sortDir=asc";
 	}
 	
 	@GetMapping("/products/page/{pageNum}")	

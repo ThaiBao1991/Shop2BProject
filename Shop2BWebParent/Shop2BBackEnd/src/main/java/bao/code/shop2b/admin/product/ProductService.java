@@ -18,7 +18,7 @@ import bao.code.shop2b.common.exception.ProductNotFoundException;
 @Transactional
 public class ProductService {
 	
-	public static final int PRODUCTS_PER_PAGE =4;
+	public static final int PRODUCTS_PER_PAGE =5;
 	
 	@Autowired
 	private ProductRepository repo;
