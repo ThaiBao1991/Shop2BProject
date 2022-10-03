@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
+
+import bao.code.shop2b.common.entity.AuthenticationType;
 import bao.code.shop2b.common.entity.Country;
 import bao.code.shop2b.common.entity.Customer;
 
@@ -110,6 +112,13 @@ public class CustomerRepositoryTests {
 		
 		assertThat(findById).isNotPresent();
 	}
+	
+	@Test
+	public void testUpdateAuthenticationType() {
+		Integer id =1;
+		repo.updateAuthenticationType(id, AuthenticationType.DATABASE);
+		
+		Customer customer = repo.findById(id).get();
+		assertThat(customer.getAuthenticationType()).isEqualTo(AuthenticationType.DATABASE);
+	}
 }
-
-

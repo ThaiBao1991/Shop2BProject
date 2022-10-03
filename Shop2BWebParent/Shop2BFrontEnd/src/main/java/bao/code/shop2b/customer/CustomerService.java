@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import bao.code.shop2b.common.entity.AuthenticationType;
 import bao.code.shop2b.common.entity.Country;
 import bao.code.shop2b.common.entity.Customer;
 import bao.code.shop2b.setting.CountryRepository;
@@ -54,6 +55,12 @@ public class CustomerService {
 		}else {
 			customerRepo.enable(customer.getId());
 			return true;
+		}
+	}
+	
+	public void updateAuthentication(Customer customer, AuthenticationType type) {
+		if(!customer.getAuthenticationType().equals(type)) {
+			customerRepo.updateAuthenticationType(customer.getId(), type);
 		}
 	}
 }
