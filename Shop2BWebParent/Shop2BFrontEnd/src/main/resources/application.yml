@@ -1,0 +1,30 @@
+server:
+  port: 80
+  servlet:
+    context-path: /Shop2B
+    
+spring:
+  datasource:
+    password: thaibao1991dn
+    url: jdbc:mysql://localhost:3306/shop2bdb?createDatabaseIfNotExist=true
+    username: root
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: false
+    
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 855303752079-8njo0nv9i40v861g4u7ommqsk5ogpn1h.apps.googleusercontent.com
+            client-secret: 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
+            scope: 
+            - email
+            - profile
