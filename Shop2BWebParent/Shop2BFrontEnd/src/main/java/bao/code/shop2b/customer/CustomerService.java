@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,11 @@ import net.bytebuddy.utility.RandomString;
 public class CustomerService {
 	@Autowired private CountryRepository countryRepo;
 	@Autowired private CustomerRepository customerRepo;
-	@Autowired PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
+	@Autowired 
+	public CustomerService(@Lazy PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
 	
 	public List<Country> listAllCountries(){
 		return countryRepo.findAllByOrderByNameAsc();
@@ -34,6 +39,7 @@ public class CustomerService {
 		encodePassword(customer);
 		customer.setEnabled(false);
 		customer.setCreateTime(new Date());
+		customer.setAuthenticationType(AuthenticationType.DATABASE);
 		
 		String randomCode = RandomString.make(64);
 		customer.setVerificationCode(randomCode);

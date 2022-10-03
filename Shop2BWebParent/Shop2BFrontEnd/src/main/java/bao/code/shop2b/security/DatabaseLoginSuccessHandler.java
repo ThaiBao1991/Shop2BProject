@@ -1,4 +1,4 @@
-package bao.code.shop2b.security.oauth;
+package bao.code.shop2b.security;
 
 import java.io.IOException;
 
@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -16,29 +15,19 @@ import bao.code.shop2b.common.entity.AuthenticationType;
 import bao.code.shop2b.common.entity.Customer;
 import bao.code.shop2b.customer.CustomerService;
 @Component
-public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-	@Autowired
-	private CustomerService customerService;
-		
+public class DatabaseLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+	@Autowired private CustomerService customerService;
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
-		CustomerOAuth2User oAuth2User = (CustomerOAuth2User) authentication.getPrincipal();
+		CustomerUserDetails userDetails = (CustomerUserDetails) authentication.getPrincipal();
+		Customer customer = userDetails.getCustomer();
 		
-		String name = oAuth2User.getName();
-		String email = oAuth2User.getEmail();
-		String countryCode = request.getLocale().getCountry();
-		
-		System.out.println("OAuth2LoginSuccessHanlder : "+ name + " | " + email);
-		
-		Customer customer = customerService.getCustomerByEmail(email);
-		if(customer == null) {
-			customerService.addNewCustomerUponOAuthLogin(name,email,countryCode);
-		}else {
-			customerService.updateAuthentication(customer, AuthenticationType.GOOGLE);
-		}
+		customerService.updateAuthentication(customer, AuthenticationType.DATABASE);
 		
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
-
+	
+	
 }
