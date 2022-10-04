@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,8 @@ public class ProductController {
 	private CategoryService categoryService;
 	
 	@GetMapping("/products")
-	public String listFirstPage(Model model) {
+	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final Object message) {
+		ra.addFlashAttribute("message",message);
 		return "redirect:/products/page/1?sortField=id&sortDir=asc";
 	}
 	
@@ -90,7 +92,6 @@ public class ProductController {
 			if(loggedUser.hasRole("Salesperson")) {
 				productService.saveProductPrice(product);
 				ra.addFlashAttribute("message","The product has been saved successfully");
-				
 				return "redirect:/products";
 			}
 			
@@ -143,12 +144,23 @@ public class ProductController {
 	
 	@GetMapping("/products/edit/{id}")
 	public String editProduct(@PathVariable(name="id") Integer id
-			, Model model, RedirectAttributes ra) throws ProductNotFoundException{
+			, Model model, RedirectAttributes ra,
+			@AuthenticationPrincipal ShopUserDetails loggedUser) throws ProductNotFoundException{
 		try {
 			Product product = productService.get(id);
 			List<Brand> listBrands = brandService.listAll();
 			Integer numberOfExistingExtraImages = product.getImages().size();
 			
+			boolean isReadOnlyForSalesperson=false;
+			
+			if(!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+				if(loggedUser.hasRole("Salesperson")) {
+					isReadOnlyForSalesperson=true;
+				}
+				
+			}
+			
+			model.addAttribute("isReadOnlyForSalesperson",isReadOnlyForSalesperson);
 			model.addAttribute("product",product);
 			model.addAttribute("listBrands",listBrands);
 			model.addAttribute("pageTitle", "Edit Product (ID : " +id +")");
@@ -167,7 +179,6 @@ public class ProductController {
 		try {
 			Product product = productService.get(id);
 			model.addAttribute("product",product);
-
 			
 			return "products/product_detail_modal";
 		} catch (ProductNotFoundException e) {

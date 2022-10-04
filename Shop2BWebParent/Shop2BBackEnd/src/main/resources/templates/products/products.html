@@ -95,7 +95,7 @@
                             </td>
                         </th:block>
                         <td>
-                            <a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'products/detail/'+${product.id}}" title="View details of this products"></a>
+                            <a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'/products/detail/'+${product.id}}" title="View details of this products"></a>
                             <th:block sec:authorize="hasAnyAuthority('Admin','Editor','Salesperson')">
                                 &nbsp;
                                 <div th:replace="fragments :: edit('product' , '/products/edit/' + ${product.id})"></div>
@@ -127,7 +127,7 @@
                         </th:block>
                     </div>
                     <div class="mt-2">
-                        <a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'products/detail/'+${product.id}}" title="View details of this products"></a>
+                        <a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'/products/detail/'+${product.id}}" title="View details of this products"></a>
                         <th:block sec:authorize="hasAnyAuthority('Admin','Editor','Salesperson')">
                             &nbsp;
                             <div th:replace="fragments :: edit('product' , '/products/edit/' + ${product.id})"></div>

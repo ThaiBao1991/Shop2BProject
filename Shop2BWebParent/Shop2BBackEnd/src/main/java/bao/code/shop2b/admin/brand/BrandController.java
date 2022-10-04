@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,8 @@ public class BrandController {
 	private CategoryService categoryService;
 	
 	@GetMapping("/brands")
-	public String listFirstPage(Model model) {
+	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final Object message) {
+		ra.addFlashAttribute("message",message);
 		return "redirect:/brands/page/1?sortField=name&sortDir=asc";
 	}
 	

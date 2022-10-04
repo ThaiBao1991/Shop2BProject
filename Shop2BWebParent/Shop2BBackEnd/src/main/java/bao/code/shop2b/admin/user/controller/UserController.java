@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,8 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping("/users")
-	public String listAll() {
+	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final Object message) {
+		ra.addFlashAttribute("message",message);
 		return "redirect:/users/page/1?sortField=id&sortDir=asc";
 	}
 	
