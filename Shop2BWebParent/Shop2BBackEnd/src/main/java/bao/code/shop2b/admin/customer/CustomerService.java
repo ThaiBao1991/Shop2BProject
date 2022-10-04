@@ -69,6 +69,7 @@ public class CustomerService {
 		customerInForm.setEnabled(customerInDB.isEnabled());
 		customerInForm.setCreateTime(customerInDB.getCreateTime());
 		customerInForm.setVerificationCode(customerInDB.getVerificationCode());
+		customerInForm.setAuthenticationType(customerInDB.getAuthenticationType());
 		customerRepo.save(customerInForm);
 	}
 	
