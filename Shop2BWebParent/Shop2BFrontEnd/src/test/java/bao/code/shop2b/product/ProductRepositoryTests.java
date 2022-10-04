@@ -18,7 +18,7 @@ public class ProductRepositoryTests {
 	
 	@Test
 	public void testFindByAlias() {
-		String alias = "BasicTShit-1";
+		String alias = "2000463181";
 		
 		Product product = repo.findByAlias(alias);
 		assertThat(product).isNotNull();
