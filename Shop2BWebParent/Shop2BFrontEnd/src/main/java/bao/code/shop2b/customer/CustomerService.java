@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import bao.code.shop2b.common.entity.AuthenticationType;
 import bao.code.shop2b.common.entity.Country;
 import bao.code.shop2b.common.entity.Customer;
+import bao.code.shop2b.common.exception.CustomerNotFoundException;
 import bao.code.shop2b.setting.CountryRepository;
 import net.bytebuddy.utility.RandomString;
 
@@ -125,6 +126,36 @@ public class CustomerService {
 		customerInForm.setCreateTime(customerInDB.getCreateTime());
 		customerInForm.setVerificationCode(customerInDB.getVerificationCode());
 		customerInForm.setAuthenticationType(customerInDB.getAuthenticationType());
+		customerInForm.setResetPasswordToken(customerInDB.getResetPasswordToken());
+		
 		customerRepo.save(customerInForm);
+	}
+
+	public String updateResetPasswordToken(String email) throws CustomerNotFoundException {
+		Customer customer = customerRepo.findByEmail(email);
+		
+		if(customer !=null) {
+			String token  = RandomString.make(30);
+			customer.setResetPasswordToken(token);
+			customerRepo.save(customer);
+			return token;
+		}else {
+			throw new CustomerNotFoundException("Could not find any customer with the email : " + email);
+		}
+	}
+	
+	public Customer getByResetPasswordToken(String token) {
+		return customerRepo.findByResetPasswordToken(token);
+	}
+	
+	public void updatePassword(String token, String newPassword) throws CustomerNotFoundException {
+		Customer customer = customerRepo.findByResetPasswordToken(token);
+		if(customer == null) {
+			throw new CustomerNotFoundException("No customer found : invalid token");
+		}
+		customer.setPassword(newPassword);
+		customer.setResetPasswordToken(null);
+		encodePassword(customer);
+		customerRepo.save(customer);
 	}
 }
