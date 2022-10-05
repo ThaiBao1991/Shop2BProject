@@ -1,5 +1,7 @@
 package bao.code.shop2b.shoppingcart;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +38,9 @@ public class ShoppingCartService {
 		cartRepo.save(cartItem);
 		
 		return updateQuantity;
+	}
+	
+	public List<CartItem> listCartItems(Customer customer){
+		return cartRepo.findByCustomer(customer);
 	}
 }

@@ -1,5 +1,7 @@
 package bao.code.shop2b.common.entity;
 
+import java.beans.Transient;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -64,5 +66,8 @@ public class CartItem {
 				+ "]";
 	}
 	 
-	 
+	@Transient
+	public float getSubtotal() {
+		return product.getDiscountPrice() * quantity;
+	}
 }

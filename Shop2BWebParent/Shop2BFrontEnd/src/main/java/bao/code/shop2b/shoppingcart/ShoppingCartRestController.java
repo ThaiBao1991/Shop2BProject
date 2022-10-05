@@ -29,7 +29,6 @@ public class ShoppingCartRestController {
 		}catch(ShoppingCartException ex) {
 			return ex.getMessage();
 		}
-		
 	}
 	
 	private Customer getAuthenticatedCustomer(HttpServletRequest request) throws CustomerNotFoundException {
@@ -39,4 +38,6 @@ public class ShoppingCartRestController {
 		}
 		return customerService.getCustomerByEmail(email);
 	}
+	
+	
 }
