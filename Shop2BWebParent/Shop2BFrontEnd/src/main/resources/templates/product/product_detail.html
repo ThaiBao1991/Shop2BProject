@@ -45,7 +45,7 @@
                         </del>
                     </div>
                     <div th:if="${product.discountPercent > 0}">
-                        Price
+                        Price :
                         <span style="font-size: large; color: darkred;">
                             <div th:replace="product/product_fragments :: price_fragment(${product.discountPrice})"></div>
                         </span>
