@@ -34,8 +34,10 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping("/users")
-	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final Object message) {
+	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final String message) {
+		if(message.length()>1) {
 		ra.addFlashAttribute("message",message);
+		}
 		return "redirect:/users/page/1?sortField=id&sortDir=asc";
 	}
 	

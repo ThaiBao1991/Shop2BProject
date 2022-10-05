@@ -34,8 +34,10 @@ public class BrandController {
 	private CategoryService categoryService;
 	
 	@GetMapping("/brands")
-	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final Object message) {
-		ra.addFlashAttribute("message",message);
+	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final String message) {
+		if(message.length()>1) {
+			ra.addFlashAttribute("message",message);
+			}
 		return "redirect:/brands/page/1?sortField=name&sortDir=asc";
 	}
 	

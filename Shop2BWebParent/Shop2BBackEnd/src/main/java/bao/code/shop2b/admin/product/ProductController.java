@@ -40,8 +40,10 @@ public class ProductController {
 	private CategoryService categoryService;
 	
 	@GetMapping("/products")
-	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final Object message) {
-		ra.addFlashAttribute("message",message);
+	public String listFirstPage(RedirectAttributes ra,@ModelAttribute("message") final String message) {
+		if(message.length()>1) {
+			ra.addFlashAttribute("message",message);
+			}
 		return "redirect:/products/page/1?sortField=id&sortDir=asc";
 	}
 	
