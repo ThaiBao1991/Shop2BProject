@@ -63,7 +63,7 @@ function updateQuantity(productId,quantity){
 
 function updateSubtotal(updatedSubtotal,productId){
     updatedSubtotal = parseFloat(updatedSubtotal.replaceAll(",",""));
-    formattedSubtotal =$.number(updatedSubtotal,2)
+    formattedSubtotal =$.number(updatedSubtotal,DECIMAL_DIGITS_VALUE)
     $("#subtotal" + productId).text(formattedSubtotal);
 }
 
@@ -79,7 +79,7 @@ function updateTotal(){
     if(productCount <1){
         showEmptyShoppingCart();
     }else{
-        formattedTotal = $.number(total,2);
+        formattedTotal = $.number(total,DECIMAL_DIGITS_VALUE);
         $("#total").text(formattedTotal);
     }
 }
