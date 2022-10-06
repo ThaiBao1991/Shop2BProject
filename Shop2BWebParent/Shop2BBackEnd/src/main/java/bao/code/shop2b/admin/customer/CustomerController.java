@@ -1,6 +1,9 @@
 package bao.code.shop2b.admin.customer;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,5 +122,12 @@ public class CustomerController {
 			ra.addFlashAttribute("message",e.getMessage());
 		}
 		return "redirect:/customers";
+	}
+	
+	@GetMapping("/customers/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException{
+		List<Customer> listCustomers = service.listAll();
+		CustomerCsvExporter exporter = new CustomerCsvExporter();
+		exporter.export(listCustomers, response);
 	}
 }

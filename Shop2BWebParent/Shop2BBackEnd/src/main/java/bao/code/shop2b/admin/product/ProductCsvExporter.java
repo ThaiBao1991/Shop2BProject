@@ -14,7 +14,7 @@ import bao.code.shop2b.common.entity.Product;
 
 public class ProductCsvExporter extends AbstractExporter{
 public void export(List<Product> listProducts, HttpServletResponse response) throws IOException {
-	super.setResponseHeader(response,"text/csv", ".csv","brands_");
+	super.setResponseHeader(response,"text/csv", ".csv","products_");
 	
 	ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
 			CsvPreference.STANDARD_PREFERENCE);
