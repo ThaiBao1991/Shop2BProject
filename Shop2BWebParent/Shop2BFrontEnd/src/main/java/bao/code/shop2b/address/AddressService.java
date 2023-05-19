@@ -29,4 +29,11 @@ public class AddressService {
 	public void delete(Integer addressId, Integer customerId) {
 		repo.deleteByIdAndCustomer(addressId, customerId);
 	}
+	
+	public void setDefaultAddress(Integer defaulAddressId,Integer customerId) {
+		if(defaulAddressId >0) {
+			repo.setDefaultAdress(defaulAddressId);
+		}
+		repo.setNonDefaultForOther(defaulAddressId, customerId);
+	}
 }
