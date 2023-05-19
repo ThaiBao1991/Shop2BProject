@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+    <head th:replace="fragments :: page_head('Shipping Rates - Shop2B Admin', 'none')">
+  
+    </head>
+<body>
+	<div class="container-fluid">
+        <div th:replace="navigation :: menu">           
+        </div>
+
+        <div>
+            <h2>Manage Shipping Rates</h2>
+            <a th:href="@{/shipping_rates/new}" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+            &nbsp;&nbsp;
+            <a th:href="@{/shipping_rates/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2" ></a>
+        </div>
+        
+        <div th:replace="fragments :: search_form()"></div>
+		
+        <div class="full-details">
+            <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                <thead class="thead-dark">
+                    <tr>
+                            <th th:replace="fragments :: column_link('id', 'ID','none')"></th>
+                            <th th:replace="fragments :: column_link('country', 'Country','none')"></th>
+                            <th th:replace="fragments :: column_link('state', 'State','none')"></th>
+                            <th th:replace="fragments :: column_link('rate', 'Rate','none')"></th>
+                            <th th:replace="fragments :: column_link('days', 'Days','none')"></th>
+                            <th th:replace="fragments :: column_link('codSupported', 'COD Supported','none')"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="rate : ${shippingRates}">
+                        <td >[[${rate.id}]]</td>
+                        <td >[[${rate.country.name}]]</td>
+                        <td >[[${rate.state}]]</td>
+                        <td >[[${rate.rate}]]</td>
+                        <td >[[${rate.days}]]</td>
+                        <td>
+                            <div th:replace="shipping_rates/shipping_rates_fragment :: cod_support"></div>
+                        </td>
+							
+                        <td>
+                            <div th:replace="fragments :: edit('shipping rate' , '/shipping_rates/edit/' + ${rate.id})"></div>
+                            &nbsp;
+                            <div th:replace="fragments :: delete('shipping rate' , '/shipping_rates/delete/' + ${rate.id}, ${rate.id},true)"></div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="less-details">
+            <div th:each="rate : ${shippingRates}" class="row m-1">
+                <div class="col-4">
+                    <span><b>[[${rate.country.name}]]</b></span>
+                    <br/>
+                    <span>[[${rate.rate}]]</span>
+                </div>
+                <div class="col-8">
+
+                    <div th:replace="shipping_rates/shipping_rates_fragment :: cod_support"></div>
+                    &nbsp;
+                    <div th:replace="fragments :: edit('shipping rate' , '/shipping_rates/edit/' + ${rate.id})"></div>
+                    &nbsp;
+                    <div th:replace="fragments :: delete('shipping rate' , '/shipping_rate/delete/' + ${rate.id}, ${rate.id},true)"></div>
+
+                </div>
+                <div>&nbsp;</div>
+            </div>
+        </div>
+
+        <div th:replace="fragments :: pagination('shipping_rates')"></div>
+		
+		<div th:replace="modal_fragments :: confirm_modal"></div>
+		
+        <div th:replace="fragments :: footer"></div>
+    </div>
+    <script type="text/javascript">
+        moduleURL ="[[@{/shipping_rates}]]";
+
+        $(document).ready(function(){
+            $(".link-delete").on('click',function(e){
+                e.preventDefault();
+                showDeleteConfirmModal($(this),'shipping rate');
+            });
+            
+            $(".link-detail").on("click",function(e){
+                e.preventDefault();
+                linkDetailURL = $(this).attr("href");
+                $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
+            });
+        });
+    </script>
+    <script th:src="@{/js/common_list.js}"></script>
+</body>
+</html>
